@@ -1,41 +1,61 @@
 import { useDispatch } from "react-redux";
-import { removeTodo,toggleCompleted } from "../store/todoSlice";
+import { toggleCompleted } from "../store/todoSlice";
+import { deleteTodo,toggleStatus } from "../store/action";
 
-const TodoItem = ({id, text, completed}) => {
-const dispath = useDispatch()
-   return (
+ // Вариант с вариантом  удаления  createAsyncThunk
+ const TodoItem = ({ id, title, completed }) => {
+  const dispatch = useDispatch();
+
+  return (
     <li>
-     <input className="checkbox"  type="checkbox"    checked={completed}
-        //onChange={()=> dispath(toggleCompleted({id}))}
-          onChange={()=> dispath(toggleCompleted({id}))}
-       />
-     <span className="span_text">{text}</span>
-     <span className="delete" onClick ={() => dispath( removeTodo({id}))} >&times;</span>
+      <input
+        className="checkbox"
+        type="checkbox"
+        checked={completed}
+        onChange={() => dispatch(toggleStatus(id))}
+      />
+      <span className="span_text">{title}</span>
+      <span className="delete" onClick={() => dispatch(deleteTodo(id))}>
+        &times;
+      </span>
     </li>
-   )
-}
+  );
+};
 
-export default TodoItem
+export default TodoItem;
 
+// type="checkbox" checked={completed}
 
-// type="checkbox" checked={completed} 
+// .........................................................
 
+/*
+import { useDispatch } from "react-redux";
+import { removeTodo, toggleCompleted } from "../store/todoSlice";
 
+  // Вариант с Базовый вариантом  createAsyncThunk
+const TodoItem = ({ id, title, completed }) => {
+  const dispatch = useDispatch();
 
+  return (
+    <li>
+      <input
+        className="checkbox"
+        type="checkbox"
+        checked={completed}
+        onChange={() => dispatch(toggleCompleted({ id }))}
+      />
+      <span className="span_text">{title}</span>
+      <span className="delete" onClick={() => dispatch(removeTodo({ id }))}>
+        &times;
+      </span>
+    </li>
+  );
+};
 
+export default TodoItem;
 
-
-
-
-
-
-
-
-
-
-
-
-
+*/
+// ..........................................................
 
 /*
                        // Вариант с Redux

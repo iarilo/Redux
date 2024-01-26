@@ -1,56 +1,95 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import TodoList from "./components/todoList";
 import InputField from "./components/inputField";
 import Counter from "./components/counter";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodos } from "./store/todoSlice";
-import {setIsLogout} from'./store/countSlice'
-
-
-
-
+//import { addTodos } from "./store/todoSlice";
+import { setIsLogout } from "./store/countSlice";
+//  .........  createAsyncThunk  .......
+import { fetchTodos, allNewTodo } from "./store/action";
+// .........................
 
 function App() {
-  const [text, setText] = useState('');
-   const dispath = useDispatch()
-  // ---------------------------
-  const  timetState =  useSelector(ell => ell.timerReducer.showBooton)
+  const [text, setText] = useState("");
+  const dispath = useDispatch();
+  // -------------- Timer  -------------
+  const timetState = useSelector((ell) => ell.timerReducer.showBooton);
+  // --------------------------
 
-   // --------------------------
-  const toggleTodo = () => {
-    dispath(addTodos({text}))
-    setText('')
+  //  .........  createAsyncThunk  .......
+ const { error,status } = useSelector( ell => ell.todoReducer)
+// .........................
+
+//  .........  Redux   createAsyncThunk  .......
+
+const toggleTodo = () => {
+  if (text.trim().length) {
+   dispath(allNewTodo(text)) 
+   setText('')
   }
+}
+/*
+// Базовый вариант
+   const toggleTodo = () => {
+if (text.trim().length) {
+    dispath(addTodos({ text }));
+    setText("");
+ };
+};
+*/
+// .........................................
+
+    // .........  createAsyncThunk  ......
+  useEffect(() => {
+    dispath(fetchTodos())
+  },[dispath])
+  // Вызываю action из todoSlice
+  
+  // .....................................
 
   return (
     <div className="App">
       <h3>Redux - todos</h3>
       <InputField text={text} setText={setText} toggleTodo={toggleTodo} />
-      <TodoList />
+    
+           {/* .....  createAsyncThunk  ... */}
+         {status === 'loading' &&  <h2>Идёт загрузка</h2> }
+         {error && <h2>произошла ошибка: {error}</h2>} 
+ 
+             {/* ............................... */}
+
+
+        <TodoList /> 
       {/* Таймер */}
-      <button className="button_loading"  
-        onClick={()=> dispath(setIsLogout())}
-        >показать</button>
+      <button className="button_loading" onClick={() => dispath(setIsLogout())}> 
+       показать
+      </button>
       {timetState && <Counter />} 
+        
     </div>
   );
 }
 export default App;
 
-
-
-
-
-
-
-
-
-
-
-
-
 //-----------------------
+
+// useEffect(() => {
+//   dispath(fetchTodos());
+// },[dispath]);
+
+//const {status, error} = useSelector(state => state.todoReduxer)
+// {status === 'loading' && <h2>Идёт загрузка</h2>}
+// {error && <h2 >Произошла ошибка: {error}</h2>} 
+
+
+
+
+
+
+
+
+
 
 /*
 function App() {

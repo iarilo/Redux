@@ -38,6 +38,7 @@ li{
 
 input:checked + span {
   text-decoration: line-through;
+  color: #36d116; 
 }
 
 .conteiner-count{

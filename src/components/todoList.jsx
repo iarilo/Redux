@@ -3,11 +3,10 @@ import TodoItem from "./todoItem";
 import { useSelector } from "react-redux";
 
 const TodoList = () => {
-  const allTodo = useSelector((ell) => ell.todoReduxer.todos);
-
+  const todos = useSelector((elem) => elem.todoReducer.todos);
   return (
     <ul>
-      {allTodo.map((ell) => (
+      {todos.map((ell) => (
         <TodoItem key={ell.id} {...ell} />
       ))}
     </ul>

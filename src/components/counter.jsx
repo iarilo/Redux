@@ -3,6 +3,7 @@ import { completadButton, resetTimer, increment } from "../store/countSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Counter = () => {
+  
   const stateButton = useSelector((ell) => ell.timerReducer.stateCount);
   const timerValue = useSelector((ell) => ell.timerReducer.value);
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const Counter = () => {
       </button>
     </div>
   );
+  
 };
 
 export default Counter;

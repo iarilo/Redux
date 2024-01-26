@@ -1,46 +1,52 @@
 // Хранилище Store   и точка входа
-/*
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistStore, persistReducer,FLUSH,
-REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER, } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-*/
-//todoReduxerSlice - может называться по любому
-//import todoReduxerSlice from'./todoSlice';
-//import countReducerSlice from './countSlice'
 
 // ------------------------------------------------
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistReducer, persistStore,FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import timerReducerStore from "./countSlice";
 import todoReduxerSlice from "./todoSlice";
 
+
+//import { useSelector } from "react-redux";
+
+
 const rootReduser = combineReducers({
-  todoReduxer: todoReduxerSlice,
-  timerReducer: timerReducerStore,
+  todoReducer:todoReduxerSlice,
+  timerReducer:timerReducerStore
 });
+ const persistConfig = {
+  key: 'root',
+  storage: storage
+ };
 
-const persistConfig = {
-  key: "root",
-  storage: storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReduser);
+const persistedReducer =  persistReducer(persistConfig,rootReduser)
 
 const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-});
+reducer: persistedReducer,
+middleware: (getDefaultMiddleware) =>
+getDefaultMiddleware({
+serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  },
+}),
 
- export const persistor = persistStore(store);
- export default store;
+})
+
+export const persistor = persistStore(store);
+export default store;
+
+
+
 
 /*
 //rootReduser, persistConfig, persistedReducer, store, persistor
@@ -51,7 +57,19 @@ serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, R
 }),
 */
 
+// ..................................................................
+
 /*
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer,FLUSH,
+REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER, } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+//todoReduxerSlice - может называться по любому
+import todoReduxerSlice from'./todoSlice';
+import countReducerSlice from './countSlice'
+ 
+
 
                 //   Persist
   //  combineReducers - собирает все  Reducers             
@@ -88,6 +106,8 @@ export const persistor =  persistStore(store)
 export default store;
 
 */
+
+// ................................................................
 
 /*
                    //  Toolkit

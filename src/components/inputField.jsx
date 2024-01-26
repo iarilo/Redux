@@ -1,11 +1,12 @@
-const InputField = ({text, setText,toggleTodo}) => {
+ const InputField = ({text, setText,toggleTodo}) => {
 
   return (
     <label className="label" >
       <input  className="input" type="text" value={text}
       onChange={(e)=> setText(e.target.value) }
       />
-      <button className="button" onClick={toggleTodo} >добавить</button>
+       <button className="button" onClick={toggleTodo} >добавить</button> 
+     
     </label>
   )
 }
